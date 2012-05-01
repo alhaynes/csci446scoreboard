@@ -4,6 +4,7 @@ var highScores = new Array([3, "ZedCthulhu"], [9, "HarryJamesPotter"], [2, "Near
 // Generate a random number
 var randomNumber = Math.floor(Math.random()*101)
 
+
 // Make the statment for toohigh/toolow
 $("#toolow").hide();
 $("#toohigh").hide();
@@ -48,11 +49,21 @@ $(function() {
 });
 
 function populateHighScores(scores) {
-	scores.sort(function(a,b) { return a[0] < b[0]; }); 
+	/*scores.sort(function(a,b) { return a[0] < b[0]; }); 
 	$('div#highScores').html("");
   for (var i = 0; i < scores.length; ++i) {
     $('div#highScores').append("<p>" + scores[i][0] + " " + scores[i][1] + "</p>");
-  }
+  }*/
+  $.ajax({
+	url: '/scores/',
+	dataType: 'json',
+	success: function(scores) {
+		$('div#highScores').html("");
+		for (var i = 0; i < scores.length; ++i) {
+			$('div#highScores').append("<p>" + scores[i].name + " " + scores[i].score + "</p>");
+		}
+	}
+  });
 }
 
 function updateScore(score) {

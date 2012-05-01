@@ -3,7 +3,7 @@ class ScoresController < ApplicationController
     @scores = Score.all(:order => 'score DESC', :limit => 10)
 	respond_to do |format|
 		format.json{
-			render json @scores
+			render json: @scores
 			}
 	end
   end
