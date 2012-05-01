@@ -18,11 +18,25 @@ $("#btnGuess").click(function() {
 		if($("#guess").val() == randomNumber){
 			$("#youWin").show();
 			var name = prompt("Enter your name: ");
-			highScores.push([guessesLeft, name]);
-			populateHighScores(highScores);
-			if(confirm("YOU WIN!! Play again if you dare")){
-				newGame();
-			}
+			//highScores.push([guessesLeft, name]);
+			
+			  $.ajax({
+				url: '/scores/',
+				type: 'POST',
+				dataType: 'json',
+				data:{
+					score:{
+						name: name,
+						score: guessesLeft
+						}
+					},
+				success: function(scores) {
+					populateHighScores(highScores);
+					if(confirm("YOU WIN!! Play again if you dare")){
+						newGame();
+						}
+					}
+				});
 		} else {
 			guessesLeft = guessesLeft - 1;
 			if(guessesLeft == 0){

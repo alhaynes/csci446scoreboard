@@ -9,6 +9,19 @@ class ScoresController < ApplicationController
   end
   
   def create
-  
+    @score = Score.new(params[:score])
+	
+	respond_to do |format|
+		if @score.save
+			format.json{
+				render json: @score, status: :created, location: @score
+			}
+		else
+			format.json{
+				render json: @score.errors, status: :unprocessable_entity 
+			}
+		end
+	end
   end
+  
 end
